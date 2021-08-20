@@ -33,6 +33,7 @@ This also can be proved mathematically. In order to satisfy the mecanum wheeled'
 ```
 # The Simulation
 By giving the robot a point [1200,1800,0.5pi] as a target to compare the motion between differential mode and omni-directional mode.
+
 1. **Differential Mode:**
 ![diff_mode](./assets/diff_mode.gif)
 
