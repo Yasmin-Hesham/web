@@ -1,36 +1,31 @@
 # GSoC'21 RoboComp project: Simultaneous path planning and following using Model Predictive Control (SPAF)
 
 
-# Path Following
-The path is a set of connected points that fit a line or a curve. By then, path following is a control task in which a geometric reference is to be followed without involving time as a constraint. From this intuitive idea, the path can be formed by a polynomial function of states, with a specific order. In other words, the states are a series of coefficients according to the path function's order.
+# Conclusion
+MPC has the ability to systematically consider nonlinearity, future predictions and operating constraints of the control system framework. It uses a mathematical dynamic process model of the system to predict future values and optimize control process performance. 
+We discussed earlier how to implement MPC using [CasADi](https://web.casadi.org/) optimizer. Both point stabilization and Path Following were implemented. Also, an additional mode was added to switch between omni-directional robot to differential robot. 
 
-An impressive and a brilliant idea was introduced in "Predictive Path Following of Mobile Robots without Terminal Stabilizing Constraints" paper. It introduces and spots the light on adding path parameter for the state and consider it a virtual state. The last shows the progress made upon the path; so in other words, it indicates how far the robot is from ending the predefined path. By consequence, a virtual control is produced, and it's considered the control action due to the virtual state's effect. 
-Moreover, the overall system's states vector will be augmented for embodying the virtual state besides the robot's states. The same idea is also applied for the control vector.
+# What's next?
+- ## Dynamic Obstacle Avoidance:
+Dynamic Obstacle Avoidance is when the trajectory has been predetermined and the controller must be able to autonomously
+avoid static obstacles on the road and can track the desired trajectory by controlling the front steering angle of the vehicle.That's why it is an important feature to be added.  
 
-Based on the following principles, the coefficients of the states in X and Y directions are passed to "compute" function to update the cost function according to the path parameter, state reference, and control reference.
-
-```python
-        controlMPC = self.controller.compute(
-            initialState, X_COEFFS, Y_COEFFS, isDifferential=True)
-```
+- ## Tuning Parameters:
+Tuning weights is not an easy task. That's why we should reach a systematic algorithm to follow in order to reach the best values for the optimization process.
 
 
-# The Simulation
-Giving the robot a set of points, and the order of the polynomials as a predefiend path. 
-```python
-POINTS = np.array([
-    [   0,    0,  0],
-    [   0, 1750,  0],
-    [1750, 1750,  0],
-    [1750,    0,  0],
-    [1750,-1750,  0],
-    [   0,-1750,  0]
-])
-```
-1. **Differential Mode:**
+# Acknowledgement
+No words can describe how grateful I am for getting through such an amazing experience. It was a great honor to participate in GSoC with Robocomp under the supervision of my mentors. I'm thankful for their guidance and support.  This topic is challenging; however, I really enjoyed learning, reading articles, and implementing the equations in code. 
 
-![diff_mode](./assets/path_following_diff.gif)
-
-2. **Omni-directionnal Mode:**
-
-![omni_mode](./assets/path_following_omni.gif)
+# References
+- All mathematical equations used in this project are included in this [paper](https://www.overleaf.com/project/60d59adc32dbeb61c43a3775).
+- Model Predictive Control: Theory, Computation, and Design (2nd Edition)
+- [MPC Lectures](https://www.youtube.com/watch?v=RrnkPrcpyEA&list=PLK8squHT_Uzej3UCUHjtOtm5X7pMFSgAL)
+- [Runge Kutta Method](https://www.sciencedirect.com/topics/mathematics/runge-kutta-method)
+- [Model Predictive Control for a Mecanum-wheeled robot in Dynamical Enviroments](https://www.researchgate.net/publication/334319114_Model_Predictive_Control_for_a_Mecanum-wheeled_robot_in_Dynamical_Environments)
+- [Design and development of an autonomous omni-directional mobile robot with Mecanum wheels](https://www.researchgate.net/publication/269294739_Design_and_development_of_an_autonomous_omni-directional_mobile_robot_with_Mecanum_wheels)
+- [Differential Drive Kinematics](http://www.cs.columbia.edu/~allen/F17/NOTES/icckinematics.pdf)
+- [Mobile Robot Kinematics](https://www.usna.edu/Users/cs/crabbe/SI475/current/mob-kin/mobkin.pdf)
+- [Predictive Path Following of Mobile Robots without Terminal Stabilizing Constraints](https://www.researchgate.net/publication/315678321_Predictive_Path_Following_of_Mobile_Robots_without_Terminal_Stabilizing_Constraints)
+- [Nonlinear Model Predictive Path-Following Control](https://www.researchgate.net/profile/Timm-Faulwasser/publication/227334005_Nonlinear_Model_Predictive_Path-Following_Control/links/0046352d563915a246000000/Nonlinear-Model-Predictive-Path-Following-Control.pdf)
+- [Receding Horizon Tracking Control of Wheeled Mobile Robots](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.65.5622&rep=rep1&type=pdf)
